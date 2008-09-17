@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<title>Demo jQuery Gears</title>
+
+</head>
+
+<body>
+<div>
+<p>Hello, from the past!</p>
+</div>
+<script src="http://www.google.com/jsapi"></script>
+<script>
+  // Load jQuery
+  google.load("jquery", "1");
+  window.onload = function(){
+    var timer = $.gears('beta.timer').setTimeout(function() { $('div p').html('Hello, from the future! (call from timer)'); },1000);
+    var timer2 = $.gears('beta.timer').setTimeout(function() { $('div p').html('Back to the future ! (call from timer2)'); },2000);
+  }
+</script>
+<script src="jquery.gears.js"></script>
+</body>
+</html>
+
