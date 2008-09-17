@@ -3,8 +3,12 @@
  @author Aleksandr Beshkenadze (http://beshkenadze.net)
  @version $Id: $Rev$ $Date$ $Author$
  **/
-jQuery.gears = function(factory){
-    if($.gears.init()){
+jQuery.gears = function(factory,options){
+    var vars = {
+		not_support: ''
+	};
+	var opts = $.extend(vars, options);
+    if($.gears.init(options)){
         return jQuery.gears.factory(factory);
     }else{
         return false;
@@ -13,7 +17,11 @@ jQuery.gears = function(factory){
 jQuery.gears.factory = function(factory){
     return google.gears.factory.create(factory)
 }
-jQuery.gears.init = function(){
+jQuery.gears.init = function(options){
+    var vars = {
+    not_support: ''
+    };
+    var opts = $.extend(vars, options);
     if (window.google && google.gears) {
         // if have gears
         return true;
@@ -53,7 +61,11 @@ jQuery.gears.init = function(){
         document.documentElement.appendChild(factory);
     }
     else if (jQuery.browser.opera) {
-        alert('Oops, Opera user :(');
+        try{
+            vars.not_support();
+        }catch(e){
+            alert('Your browser does not support the Gears.');
+        } 
         return;
     }
     else {
@@ -67,5 +79,6 @@ jQuery.gears.init = function(){
             factory: factory
         };
     }
+    
     return $(this);
 };
