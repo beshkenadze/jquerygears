@@ -1,7 +1,7 @@
 /**
  jquery.gear - jQuery plugint for init Gears
  @author Aleksandr Beshkenadze (http://beshkenadze.net)
- @version $Id: jquery.jeditable.js 401 2008-07-21 15:01:00Z tuupola $
+ @version $Id: $Rev$ $Date$ $Author$
  **/
 (function($){
     $.gears = function(opts){
