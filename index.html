@@ -17,12 +17,16 @@
   // Load jQuery
   google.load("jquery", "1");
   window.onload = function(){
-    var timer = $.gears('beta.timer',{not_support:gears_not_support}).setTimeout(function() { $('div p').html('Hello, from the future! (call from timer)'); },1000);
-    var timer2 = $.gears('beta.timer',{not_support:gears_not_support}).setTimeout(function() { $('div p').html('Back to the future ! (call from timer2)'); },2000);
-  }
-  //Your browser does not support the Gears
-  function gears_not_support(){
-    alert('Sorry, your browser does not support the Gears.');
+    var timer = $.gears('beta.timer');
+	var timer2 = $.gears('beta.timer');
+	if(timer){
+		// If Gears install
+		timer.setTimeout(function() { $('div p').html('Hello, from the future! (call from timer)'); },1000);
+		timer2.setTimeout(function() { $('div p').html('Back to the future ! (call from timer2)'); },2000);
+	}else{
+		// Else Gears NOT install
+		$.gears.install();
+	}
   }
 </script>
 <script src="jquery.gears.js"></script>
