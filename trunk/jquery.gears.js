@@ -15,7 +15,14 @@
     	$.gears.install();
     }
 */ 
-jQuery.gears = function(factory){
+jQuery.gears = function(factory,options){
+    var vars = {
+        siteName: null,
+        imageUrl: null,
+        extraMessage: null
+    };
+    var opts = $.extend(vars, options);
+    jQuery.gears.vars = vars;
     if($.gears.init()){
         return jQuery.gears.factory(factory);
     }else{
@@ -29,7 +36,29 @@ jQuery.gears = function(factory){
     @param factory {String} название фабрики.
 */ 
 jQuery.gears.factory = function(factory){
-    return google.gears.factory.create(factory)
+	switch(factory)
+	{
+	case 'beta.database':
+    case 'beta.geolocation':
+    case 'beta.localserver':
+    case 'beta.workerpool':
+        jQuery.gears.needPermission = true;
+        break;
+    case 'beta.httprequest':
+    case 'beta.desktop':
+    case 'beta.timer':
+        jQuery.gears.needPermission = false;
+        break;
+	default:
+        return false;
+	}
+    var gears_factory = google.gears.factory.create(factory);
+    if(jQuery.gears.needPermission && !jQuery.gears.hasPermission(gears_factory)){
+        jQuery.gears.userPermission = jQuery.gears.getPermission(gears_factory,jQuery.gears.vars);
+    }else{
+        jQuery.gears.userPermission = true;
+    }
+    return gears_factory;
 }
 /**
     Инициация Gears
@@ -121,3 +150,16 @@ jQuery.gears.install = function(options){
 	}
 	$(vars.element).html(vars.html);
 }
+jQuery.gears.hasPermission = function(factory){
+	return factory.hasPermission
+}
+jQuery.gears.getPermission = function(factory,options){
+	var vars = {
+		siteName: null,
+		imageUrl: null,
+		extraMessage: null
+	};
+	var opts = $.extend(vars, options);
+	return factory.getPermission(vars.siteName, vars.imageUrl, vars.extraMessage);
+}
+jQuery.gears.needPermission = false;
