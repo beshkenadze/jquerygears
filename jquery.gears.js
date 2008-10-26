@@ -26,6 +26,7 @@ jQuery.gears = function(factory,options){
     if($.gears.init()){
         return jQuery.gears.factory(factory);
     }else{
+        $.gears.install();
         return false;
     }
 };
