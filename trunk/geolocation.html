@@ -4,15 +4,16 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <body>
 <div id="message_place"></div>
-<div id="map_canvas" style="width: 500px; height: 400px"></div>
+<div id="map_canvas" style="width: 500px; height: 400px">
+<img src="load.gif" />
+</div>
 <script type="text/javascript" src="http://www.google.com/jsapi?key=ABQIAAAAqST4dCrRr3VUA2hQx-BamhRpHN8VuFduCFff_Y7yM76pWR-mlhQvW8f-HakRAJQlkI9aarcvW0nS1A"></script>
 <script>
 // Load jQuery
 google.load("jquery", "1");
 google.load("maps", "2");
 window.onload = function(){
-var geo = $.gears('beta.geolocation',{siteName:'Супер-сайт',extraMessage:'Если вы хотите, что бы наш сайт работал с вами, довертесь нам ;)'});
-console.log(geo);
+var geo = $.gears('beta.geolocation');
 	if($.gears.userPermission){
 		if(geo){
 			// If Gears install
@@ -35,8 +36,6 @@ console.log(geo);
                   + position.latitude + ', '
                   + position.longitude + ')';
 			    
-		        //latitude=59 longitude=30 accuracy=140000
-		    	console.log(position);
 		       $('#message_place').html('Вы нахожитесь: ' + address);
 		    }, function(positionError){
 		       $('#message_place').html('Attempt to get location failed: ' + positionError.message);

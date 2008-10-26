@@ -1,6 +1,6 @@
 /**
  * @author <a href="mailto:beshkenadze@gmail.com">Александр Бешкенадзе</a>
- * @description jquery.gear - jQuery плагин для работы с Gears
+ * @description jquery.gears - jQuery плагин для работы с Gears
  * @version $Id: $Rev$ $Date$ $Author$
  */
 /**
@@ -135,7 +135,7 @@ jQuery.gears.install = function(options){
 	var vars = {
 		element: 'body',
 		message: 'Install Gears for multiupload support.',
-		html: '<u>Click to install Gears to enable multifile upload!</u>'
+		html: '<u>Click to install Gears to enable!</u>'
 	};
 	var opts = $.extend(vars, options);
 	var url = 'http://gears.google.com/?action=install' +
@@ -151,7 +151,11 @@ jQuery.gears.install = function(options){
 	$(vars.element).html(vars.html);
 }
 jQuery.gears.hasPermission = function(factory){
-	return factory.hasPermission
+    if(typeof factory.hasPermission=='undefined'){
+        return google.gears.factory.hasPermission;
+    }else{
+        return factory.hasPermission
+    }
 }
 jQuery.gears.getPermission = function(factory,options){
 	var vars = {
@@ -160,6 +164,10 @@ jQuery.gears.getPermission = function(factory,options){
 		extraMessage: null
 	};
 	var opts = $.extend(vars, options);
-	return factory.getPermission(vars.siteName, vars.imageUrl, vars.extraMessage);
+    if(typeof factory.hasPermission=='undefined'){
+        return google.gears.factory.getPermission(vars.siteName, vars.imageUrl, vars.extraMessage);
+    }else{
+        return factory.getPermission(vars.siteName, vars.imageUrl, vars.extraMessage);
+    }
 }
 jQuery.gears.needPermission = false;
